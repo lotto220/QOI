@@ -1,0 +1,38 @@
+type SharedQOI = 
+ record {
+   data: vec nat8;
+   desc: Description;
+ };
+type SharedBitmap = 
+ record {
+   data: vec nat8;
+   desc: Description;
+ };
+type Result_2 = 
+ variant {
+   err;
+   ok: SharedBitmap;
+ };
+type Result_1 = 
+ variant {
+   err;
+   ok: SharedQOI;
+ };
+type Result = 
+ variant {
+   err;
+   ok: PerceptualHash;
+ };
+type PerceptualHash = record {theHash: vec nat8;};
+type Description = 
+ record {
+   channels: nat8;
+   colorspace: nat8;
+   height: nat32;
+   width: nat32;
+ };
+service : {
+  decodeQOI: (SharedQOI) -> (Result_2);
+  encodeBitmap: (SharedBitmap) -> (Result_1);
+  getPerceptualHash: (SharedBitmap) -> (Result);
+}
